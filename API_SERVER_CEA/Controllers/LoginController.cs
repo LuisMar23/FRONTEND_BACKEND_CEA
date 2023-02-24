@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.CodeDom.Compiler;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -15,14 +16,12 @@ namespace API_SERVER_CEA.Controllers
     {
         private readonly ApplicationContext contexto;
 
-        //private readonly IConfiguration _config;
-        //public LoginController(IConfiguration config)
-        //{
-        //    _config = config;
-        //}
-        public LoginController(ApplicationContext _contexto)
+        private readonly IConfiguration _config;
+
+        public LoginController(ApplicationContext _contexto,IConfiguration config)
         {
             contexto = _contexto;
+            _config = config;
         }
 
         [HttpPost]
@@ -31,24 +30,17 @@ namespace API_SERVER_CEA.Controllers
             var user = Authenticate(userLogin);
             if(user!=null)
             {
-                //var lista = from  in this.contexto.A
-                //        join persona in this.contexto.Persona on autor.PersonaId equals persona.Id
-                //        join centrotrabajo in this.contexto.CentroTrabajo on autor.CentroTrabajoId equals centrotrabajo.Id
-                //        select new Autor
-                //        {
-                //            Id = autor.Id,
-                //            Correo = autor.Correo,
-                //            CentroTrabajo = centrotrabajo,
-                //            Estado = autor.Estado,
-                //            TipoAutor = autor.TipoAutor,
-                //            Persona = persona,
-                //            AutorTemas = autor.AutorTemas,
-                //        };
-                //var token = Generar(user);
-                return Ok("usuario logueado");
+                var token = Generar(user);
+                return Ok(token);
             }
             return NotFound("Usuario no encontrado");
            
+        }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            var currentUser = GetCurrentUser();
+            return Ok($"{currentUser.Nombre}");
         }
         private User Authenticate(LoginUser userlogin)
         {
@@ -60,20 +52,41 @@ namespace API_SERVER_CEA.Controllers
             }
             return null;
         }
-        //private string Generate(User user)
-        //{
-        //    var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-        //    var credencial=new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
+        private string Generar(User user)
+        {
+            var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
 
-        //    //Crear  los claims
+            //Crear los claims
 
-        //    ///https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
-        //    //var claims =new[]
-        //    //{
-        //    //    new Claim(ClaimTypes.NameIdentifier, user.Nombre),
-        //    //    new Claim(ClaimTypes.Role,)
-        //    //}
-        //    //Crear el token
-        //}
+            //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Nombre),
+
+            };
+            //Crear el token
+            var token = new JwtSecurityToken(
+                _config["Jwt:Issuer"],
+                _config["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: credencial);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        private User GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+                return new User
+                {
+                    Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
+                };
+            }
+            return null;
+        }
+       
     }
 }
