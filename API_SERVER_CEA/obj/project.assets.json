@@ -10568,24 +10568,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Cea4\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\API_SERVER_CEA.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\API_SERVER_CEA.csproj",
       "projectName": "API_SERVER_CEA",
-      "projectPath": "E:\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\API_SERVER_CEA.csproj",
-      "packagesPath": "C:\\Users\\Cea4\\.nuget\\packages\\",
-      "outputPath": "E:\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\API_SERVER_CEA.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Cea4\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10665,8 +10660,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema al leer el archivo de caché C:\\Users\\Usuario\\Desktop\\CEA\\FRONTEND_BACKEND_CEA\\API_SERVER_CEA\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
