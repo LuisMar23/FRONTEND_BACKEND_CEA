@@ -2,16 +2,18 @@
 
 namespace API_SERVER_CEA.Models
 {
-    //public class Role
-    //{
-    //    [Key]
-    //    public int Id { get; set; }
-    //    public string? Nombre { get; set; }
+    public class Role
+    {
+        [Key]
+        public int id { get; set; }
 
-    //    public byte Estado { get; set; }
+        [Required(ErrorMessage = "Este campo no debe estar vacio")]
+        public string? nombre { get; set; }
+
+        public byte estado { get; set; }
 
 
-    //    public IEnumerable<UserRole> UsuariosRoles { get; set; }
+        public IEnumerable<UserRole> UsuariosRoles { get; set; }
 
-    //}
+    }
 }
