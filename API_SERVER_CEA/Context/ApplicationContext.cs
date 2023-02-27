@@ -12,13 +12,13 @@ namespace API_SERVER_CEA.Context
         }
        
         public DbSet<User> Usuario { get;set; }
-        //public DbSet<Person> Persona { get; set; }
-        //public DbSet<Role> Rol { get; set; }
+        public DbSet<Person> Persona { get; set; }
+        public DbSet<Role> Rol { get; set; }
 
-        //public DbSet<Visit> Visita { get;}
-        //public DbSet<Institution> Institucion { get;set; }
-        //public DbSet<InstitutionPerson> Institucion_Persona { get; set; }
-        //public DbSet<UserRole> Usuario_Roles { get; set; }
+        public DbSet<Visit> Visita { get; }
+        public DbSet<Institution> Institucion { get; set; }
+        public DbSet<InstitutionPerson> Institucion_Persona { get; set; }
+        public DbSet<UserRole> UsuarioRol { get; set; }
 
 
         //protected override void OnModelCreating(ModelBuilder builder)

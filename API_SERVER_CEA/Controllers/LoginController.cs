@@ -25,46 +25,47 @@ namespace API_SERVER_CEA.Controllers
             _config = config;
         }
 
-        [HttpPost]
-        public IActionResult  Login(LoginUser userlogin)
-        {
-            var u = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
-            if (u!=null)
-            {
-                //var token = Generar(user);
-                return  Ok(u);
-            }
-            return NotFound("Usuario no encontrado");
-           
-        }
-        //public IActionResult Login(LoginUser userLogin)
+        //[HttpPost]
+        //public IActionResult  Login(LoginUser userlogin)
         //{
-        //    var user = Authenticate(userLogin);
-        //    if (user != null)
+        //    var u = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
+        //    if (u!=null)
         //    {
-        //        //var token = Generar(user);
-        //        return Ok("usuario logueado");
+        //        var token = Generar(u);
+        //        return  Ok(u);
         //    }
         //    return NotFound("Usuario no encontrado");
 
         //}
+        [HttpPost]
+        public IActionResult Login(LoginUser userLogin)
+        {
+            var user = Authenticate(userLogin);
+            if (user != null)
+            {
+                var token = Generar(user);
+                return Ok("usuario logueado");
+            }
+            return NotFound("Usuario no encontrado");
+
+        }
         [HttpGet]
         public IActionResult Get()
         {
             var currentUser = GetCurrentUser();
             return Ok($"{currentUser.Nombre}");
         }
-        
-        //private User Authenticate(LoginUser userlogin)
-        //{
-        //    var currentUser = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
 
-        //    if (currentUser != null)
-        //    {
-        //        return currentUser;
-        //    }
-        //    return null;
-        //}
+        private User Authenticate(LoginUser userlogin)
+        {
+            var currentUser = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
+
+            if (currentUser != null)
+            {
+                return currentUser;
+            }
+            return null;
+        }
         private string Generar(User user)
         {
             var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
