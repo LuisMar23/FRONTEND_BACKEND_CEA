@@ -11,7 +11,11 @@ namespace API_SERVER_CEA.Context
 
         }
        
+<<<<<<< HEAD
         public DbSet<User> Usuario { get;set; }
+=======
+        public DbSet<User> usuario { get;set; }
+>>>>>>> 212794b20c6ab599e92a8a52ef6bc04bfa21b669
         public DbSet<Person> Persona { get; set; }
         public DbSet<Role> Rol { get; set; }
 

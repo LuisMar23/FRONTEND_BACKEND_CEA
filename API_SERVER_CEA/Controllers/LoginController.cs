@@ -25,8 +25,24 @@ namespace API_SERVER_CEA.Controllers
             _config = config;
         }
 
+<<<<<<< HEAD
         //[HttpPost]
         //public IActionResult  Login(LoginUser userlogin)
+=======
+        [HttpPost]
+        public IActionResult  Login(LoginUser userlogin)
+        {
+            var u = contexto.usuario.FirstOrDefault( user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password );
+            if (u!=null)
+            {
+                //var token = Generar(user);
+                return  Ok(u);
+            }
+            return NotFound("Usuario no encontrado");
+           
+        }
+        //public IActionResult Login(LoginUser userLogin)
+>>>>>>> 212794b20c6ab599e92a8a52ef6bc04bfa21b669
         //{
         //    var u = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
         //    if (u!=null)
@@ -37,6 +53,7 @@ namespace API_SERVER_CEA.Controllers
         //    return NotFound("Usuario no encontrado");
 
         //}
+<<<<<<< HEAD
         [HttpPost]
         public IActionResult Login(LoginUser userLogin)
         {
@@ -70,37 +87,60 @@ namespace API_SERVER_CEA.Controllers
         {
             var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
+=======
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    var currentUser = GetCurrentUser();
+        //    return Ok($"{currentUser.Nombre}");
+        //}
+        
+        //private User Authenticate(LoginUser userlogin)
+        //{
+        //    var currentUser = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
 
-            //Crear los claims
+        //    if (currentUser != null)
+        //    {
+        //        return currentUser;
+        //    }
+        //    return null;
+        //}
+        //private string Generar(User user)
+        //{
+        //    var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        //    var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
+>>>>>>> 212794b20c6ab599e92a8a52ef6bc04bfa21b669
 
-            //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Nombre),
+        //    //Crear los claims
 
-            };
-            //Crear el token
-            var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"],
-                _config["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credencial);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        private User GetCurrentUser()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
-            {
-                var userClaims = identity.Claims;
-                return new User
-                {
-                    Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
-                };
-            }
-            return null;
-        }
+        //    //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
+        //    var claims = new[]
+        //    {
+        //        new Claim(ClaimTypes.NameIdentifier, user.Nombre),
+
+        //    };
+        //    //Crear el token
+        //    var token = new JwtSecurityToken(
+        //        _config["Jwt:Issuer"],
+        //        _config["Jwt:Audience"],
+        //        claims,
+        //        expires: DateTime.Now.AddMinutes(15),
+        //        signingCredentials: credencial);
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
+        //private User GetCurrentUser()
+        //{
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    if (identity != null)
+        //    {
+        //        var userClaims = identity.Claims;
+        //        return new User
+        //        {
+        //            Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
+        //        };
+        //    }
+        //    return null;
+        //}
        
     }
 }
