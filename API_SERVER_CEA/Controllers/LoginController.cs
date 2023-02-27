@@ -28,7 +28,7 @@ namespace API_SERVER_CEA.Controllers
         [HttpPost]
         public IActionResult  Login(LoginUser userlogin)
         {
-            var u = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
+            var u = contexto.usuario.FirstOrDefault( user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password );
             if (u!=null)
             {
                 //var token = Generar(user);
@@ -48,12 +48,12 @@ namespace API_SERVER_CEA.Controllers
         //    return NotFound("Usuario no encontrado");
 
         //}
-        [HttpGet]
-        public IActionResult Get()
-        {
-            var currentUser = GetCurrentUser();
-            return Ok($"{currentUser.Nombre}");
-        }
+        //[HttpGet]
+        //public IActionResult Get()
+        //{
+        //    var currentUser = GetCurrentUser();
+        //    return Ok($"{currentUser.Nombre}");
+        //}
         
         //private User Authenticate(LoginUser userlogin)
         //{
@@ -65,41 +65,41 @@ namespace API_SERVER_CEA.Controllers
         //    }
         //    return null;
         //}
-        private string Generar(User user)
-        {
-            var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
+        //private string Generar(User user)
+        //{
+        //    var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+        //    var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
 
-            //Crear los claims
+        //    //Crear los claims
 
-            //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Nombre),
+        //    //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
+        //    var claims = new[]
+        //    {
+        //        new Claim(ClaimTypes.NameIdentifier, user.Nombre),
 
-            };
-            //Crear el token
-            var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"],
-                _config["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credencial);
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        private User GetCurrentUser()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
-            {
-                var userClaims = identity.Claims;
-                return new User
-                {
-                    Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
-                };
-            }
-            return null;
-        }
+        //    };
+        //    //Crear el token
+        //    var token = new JwtSecurityToken(
+        //        _config["Jwt:Issuer"],
+        //        _config["Jwt:Audience"],
+        //        claims,
+        //        expires: DateTime.Now.AddMinutes(15),
+        //        signingCredentials: credencial);
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
+        //private User GetCurrentUser()
+        //{
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    if (identity != null)
+        //    {
+        //        var userClaims = identity.Claims;
+        //        return new User
+        //        {
+        //            Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
+        //        };
+        //    }
+        //    return null;
+        //}
        
     }
 }

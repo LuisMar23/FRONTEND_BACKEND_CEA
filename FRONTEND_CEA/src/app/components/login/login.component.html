@@ -9,21 +9,22 @@
 </head>
 <body>
     <div class="box">
-        <div class="form">
-            <h2>Iniciar Sesión</h2>
-            <div class="inputBox">
-                <input type="text" required="required">
-                <span>Usuario</span>
-                <i></i>
-            </div>
-            <div class="inputBox">
-                <input type="password" required="required">
-                <span>Contraseña</span>
-                <i></i>
-            </div>
-
-            <input type="submit" value="Log In">
-
+        <div class="form" >
+            <form [formGroup]="form" (ngSubmit)="loguear()">
+                <h2>Iniciar Sesión</h2>
+                <div class="inputBox">
+                    <input type="text" required="required" formControlName="username">
+                    <span>Usuario</span>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" required="required" formControlName="contrasenia">
+                    <span>Contraseña</span>
+                    <i></i>
+                </div>
+    
+                <input type="submit" value="Log In">
+            </form>
         </div>
     </div>
 </body>

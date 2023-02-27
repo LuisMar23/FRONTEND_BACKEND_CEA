@@ -4,6 +4,8 @@ namespace API_SERVER_CEA.Models
 {
     public class InstitutionPerson
     {
+        [Key]
+        public int Id { get; set; }
         public int InstitutionId { get; set; }
         public Institution Institucion { get; set; }
 

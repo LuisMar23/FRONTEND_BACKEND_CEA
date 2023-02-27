@@ -5,16 +5,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PruebaModule } from './modules/prueba/prueba.module';
 import { LoginComponent } from './components/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PruebaModule
+    PruebaModule,
+    ReactiveFormsModule,
+
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]
