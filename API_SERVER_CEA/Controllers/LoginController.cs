@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
 namespace API_SERVER_CEA.Controllers
 {
@@ -21,21 +22,26 @@ namespace API_SERVER_CEA.Controllers
 
         public LoginController(ApplicationContext _contexto,IConfiguration config)
         {
-            contexto = _contexto;
+            this.contexto = _contexto;
             _config = config;
         }
 
         [HttpPost]
-        public IActionResult  Login(LoginUser userlogin)
+        public async Task<ActionResult<List<LoginUser>>>  Login(LoginUser userlogin)
         {
-            var u = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
+            var u = await contexto.Usuario.FirstOrDefaultAsync(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
             if (u!=null)
             {
-                //var token = Generar(user);
-                return  Ok(u);
+                var token = Generar(u);
+                return Ok(token);
             }
-            return NotFound("Usuario no encontrado");
-           
+            else
+            {
+                return NotFound("Usuario no encontrado");
+            }
+            
+
+
         }
         //public IActionResult Login(LoginUser userLogin)
         //{
@@ -52,7 +58,7 @@ namespace API_SERVER_CEA.Controllers
         public IActionResult Get()
         {
             var currentUser = GetCurrentUser();
-            return Ok($"{currentUser.Nombre}");
+            return Ok($"{currentUser.nombreUsuario}");
         }
         
         //private User Authenticate(LoginUser userlogin)
@@ -75,7 +81,7 @@ namespace API_SERVER_CEA.Controllers
             //https://www.youtube.com/watch?v=tm8_merp_v0&t=10s
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Nombre),
+                new Claim(ClaimTypes.NameIdentifier, user.nombreUsuario),
 
             };
             //Crear el token
@@ -95,7 +101,7 @@ namespace API_SERVER_CEA.Controllers
                 var userClaims = identity.Claims;
                 return new User
                 {
-                    Nombre = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
+                    nombreUsuario = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value
                 };
             }
             return null;

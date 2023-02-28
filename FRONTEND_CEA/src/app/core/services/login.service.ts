@@ -4,15 +4,13 @@ import { Observable } from 'rxjs';
 // import { environment } from 'src/environments/environment';
 import { Login } from '../interfaces/login';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
+@Injectable({
+  providedIn: 'root'
+})
 export class LoginService {
-  constructor(
-    private httpClient: HttpClient,
-  ){}
+  constructor(private httpClient: HttpClient){}
 
-  enviarUsuario(usuario:Login): Observable<Login>{
-    return this.httpClient.post<Login>("http://localhost:7259/api/Login",usuario);
+  enviarUsuario(usuario:Login): Observable<any>{
+    return this.httpClient.post("http://localhost:7259/api/Login",usuario);
   }
 }
