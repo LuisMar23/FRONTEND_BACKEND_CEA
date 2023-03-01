@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit{
   //   'contrasenia',
   // ];
   public form!: FormGroup;
-
+  datos:any={}
   constructor(
     private loginService: LoginService,
     private fb: FormBuilder){
@@ -29,13 +29,18 @@ export class LoginComponent implements OnInit{
 
   loguear():void{
     const usuario:Login = this.form.value;
-    console.log(usuario);
     this.loginService.enviarUsuario(usuario).subscribe(
       (resp) => {
-        localStorage.setItem("user",JSON.stringify(resp));
-        // this.form.reset();
+        this.datos=resp;
+        console.log(this.datos);
+        localStorage.setItem("user",JSON.stringify(this.datos["tok"]));
+        console.log(resp);
+      },
+      (e)=>{
+        console.log(e.error);
       }
       
-    )
+      
+    );
   }
 }

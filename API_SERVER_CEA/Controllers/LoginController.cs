@@ -27,51 +27,51 @@ namespace API_SERVER_CEA.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<LoginUser>>>  Login(LoginUser userlogin)
-        {
-            var u = await contexto.Usuario.FirstOrDefaultAsync(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
-            if (u!=null)
-            {
-                var token = Generar(u);
-                return Ok(token);
-            }
-            else
-            {
-                return NotFound("Usuario no encontrado");
-            }
-            
-
-
-        }
-        //public IActionResult Login(LoginUser userLogin)
+        //public async Task<ActionResult<List<LoginUser>>>  Login(LoginUser userlogin)
         //{
-        //    var user = Authenticate(userLogin);
-        //    if (user != null)
+        //    var u = await contexto.Usuario.FirstOrDefaultAsync(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
+        //    if (u!=null)
         //    {
-        //        //var token = Generar(user);
-        //        return Ok("usuario logueado");
+        //        var token = Generar(u);
+        //        return Ok(token);
         //    }
-        //    return NotFound("Usuario no encontrado");
+        //    else
+        //    {
+        //        return NotFound("Usuario no encontrado");
+        //    }
+
+
 
         //}
+        public IActionResult Login(LoginUser userLogin)
+        {
+            var user = Authenticate(userLogin);
+            if (user != null)
+            {
+                var token = Generar(user);
+                return Ok(token);
+            }
+            return NotFound("Usuario no encontrado");
+
+        }
         [HttpGet]
         public IActionResult Get()
         {
             var currentUser = GetCurrentUser();
             return Ok($"{currentUser.nombreUsuario}");
         }
-        
-        //private User Authenticate(LoginUser userlogin)
-        //{
-        //    var currentUser = contexto.Usuario.FirstOrDefault(user => user.Nombre.ToLower() == userlogin.UserName.ToLower() && user.Contrasenia == userlogin.Password);
 
-        //    if (currentUser != null)
-        //    {
-        //        return currentUser;
-        //    }
-        //    return null;
-        //}
-        private string Generar(User user)
+        private User Authenticate(LoginUser userlogin)
+        {
+            var currentuser = contexto.Usuario.FirstOrDefault(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
+
+            if (currentuser != null)
+            {
+                return currentuser;
+            }
+            return null;
+        }
+        private dynamic Generar(User user)
         {
             var security = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credencial = new SigningCredentials(security, SecurityAlgorithms.HmacSha256);
@@ -89,9 +89,13 @@ namespace API_SERVER_CEA.Controllers
                 _config["Jwt:Issuer"],
                 _config["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddMinutes(60),
                 signingCredentials: credencial);
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return new
+            {
+                message="exito",
+                tok = new JwtSecurityTokenHandler().WriteToken(token)
+            };
         }
         private User GetCurrentUser()
         {
