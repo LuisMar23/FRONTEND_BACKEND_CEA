@@ -8,6 +8,8 @@ import { HttpClientModule } from '@angular/common/http';
 // import { CookieService } from 'ngx-cookie-service';
 import { AccesoModule } from './modules/acceso/acceso.module';
 import { LogoutModule } from './modules/logout/logout.module';
+import { HomeModule } from './modules/home/home.module';
+
 
 
 @NgModule({
@@ -15,12 +17,16 @@ import { LogoutModule } from './modules/logout/logout.module';
     AppComponent,
   ],
   imports: [
+
     AccesoModule,
     LogoutModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AccesoModule,
+    HomeModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
