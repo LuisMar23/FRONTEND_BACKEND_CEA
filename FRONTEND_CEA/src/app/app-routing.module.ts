@@ -7,6 +7,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/acceso/acceso.module').then((m) => m.AccesoModule),
   },
+  {
+    path: 'logout',
+    loadChildren: () =>
+      import('./modules/logout/logout.module').then((m) => m.LogoutModule),
+  },
 ];
 
 @NgModule({

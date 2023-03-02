@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 // import { CookieService } from 'ngx-cookie-service';
 import { AccesoModule } from './modules/acceso/acceso.module';
+import { LogoutModule } from './modules/logout/logout.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AccesoModule } from './modules/acceso/acceso.module';
   ],
   imports: [
     AccesoModule,
+    LogoutModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
