@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 // import { CookieService } from 'ngx-cookie-service';
 import { AccesoModule } from './modules/acceso/acceso.module';
+import { HomeModule } from './modules/home/home.module';
 
 
 @NgModule({
@@ -14,11 +15,13 @@ import { AccesoModule } from './modules/acceso/acceso.module';
     AppComponent,
   ],
   imports: [
-    AccesoModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AccesoModule,
+    HomeModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

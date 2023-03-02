@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder, Validators  } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Login } from 'src/app/core/interfaces/login';
 import { LoginService } from 'src/app/core/services/login.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit{
   datos:any={}
   constructor(
     private loginService: LoginService,
-    private fb: FormBuilder){
+    private fb: FormBuilder,
+    private route: Router,){
       this.form = this.fb.group({
         userName: ['', Validators.required],
         password: ['', Validators.required],
@@ -35,12 +37,11 @@ export class LoginComponent implements OnInit{
         console.log(this.datos);
         localStorage.setItem("user",JSON.stringify(this.datos["tok"]));
         console.log(resp);
+        this.route.navigate(['/home/dashboard']);
       },
       (e)=>{
         console.log(e.error);
       }
-      
-      
     );
   }
 }
