@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_SERVER_CEA.Migrations
 {
     /// <inheritdoc />
-    public partial class primera : Migration
+    public partial class Primera : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,7 +37,7 @@ namespace API_SERVER_CEA.Migrations
                 name: "Persona",
                 columns: table => new
                 {
-                    idPersona = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nombrePersona = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -50,7 +50,7 @@ namespace API_SERVER_CEA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persona", x => x.idPersona);
+                    table.PrimaryKey("PK_Persona", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -58,7 +58,7 @@ namespace API_SERVER_CEA.Migrations
                 name: "Rol",
                 columns: table => new
                 {
-                    idRol = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     nombreRol = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -66,7 +66,7 @@ namespace API_SERVER_CEA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rol", x => x.idRol);
+                    table.PrimaryKey("PK_Rol", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -113,7 +113,7 @@ namespace API_SERVER_CEA.Migrations
                         name: "FK_Institucion_Persona_Persona_PersonId",
                         column: x => x.PersonId,
                         principalTable: "Persona",
-                        principalColumn: "idPersona",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
@@ -129,24 +129,24 @@ namespace API_SERVER_CEA.Migrations
                     contraseniaUsuario = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     estadoUsuario = table.Column<int>(type: "int", nullable: false),
-                    idRol = table.Column<int>(type: "int", nullable: false),
-                    RolidRol = table.Column<int>(type: "int", nullable: true),
-                    idPersona = table.Column<int>(type: "int", nullable: false),
-                    PersonaidPersona = table.Column<int>(type: "int", nullable: true)
+                    RolId = table.Column<int>(type: "int", nullable: false),
+                    PersonaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.idUsuario);
                     table.ForeignKey(
-                        name: "FK_Usuario_Persona_PersonaidPersona",
-                        column: x => x.PersonaidPersona,
+                        name: "FK_Usuario_Persona_PersonaId",
+                        column: x => x.PersonaId,
                         principalTable: "Persona",
-                        principalColumn: "idPersona");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Usuario_Rol_RolidRol",
-                        column: x => x.RolidRol,
+                        name: "FK_Usuario_Rol_RolId",
+                        column: x => x.RolId,
                         principalTable: "Rol",
-                        principalColumn: "idRol");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -161,14 +161,14 @@ namespace API_SERVER_CEA.Migrations
                 column: "PersonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_PersonaidPersona",
+                name: "IX_Usuario_PersonaId",
                 table: "Usuario",
-                column: "PersonaidPersona");
+                column: "PersonaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_RolidRol",
+                name: "IX_Usuario_RolId",
                 table: "Usuario",
-                column: "RolidRol");
+                column: "RolId");
         }
 
         /// <inheritdoc />

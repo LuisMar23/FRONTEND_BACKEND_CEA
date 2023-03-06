@@ -5,7 +5,7 @@ namespace API_SERVER_CEA.Models
     public class Person
     {
         [Key]
-        public int idPersona { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
         public string? nombrePersona { get; set; }

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_SERVER_CEA.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230305222755_primera")]
-    partial class primera
+    [Migration("20230306151153_Primera")]
+    partial class Primera
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace API_SERVER_CEA.Migrations
 
             modelBuilder.Entity("API_SERVER_CEA.Models.Person", b =>
                 {
-                    b.Property<int>("idPersona")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -91,14 +91,14 @@ namespace API_SERVER_CEA.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("idPersona");
+                    b.HasKey("Id");
 
                     b.ToTable("Persona");
                 });
 
             modelBuilder.Entity("API_SERVER_CEA.Models.Role", b =>
                 {
-                    b.Property<int>("idRol")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -109,7 +109,7 @@ namespace API_SERVER_CEA.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("idRol");
+                    b.HasKey("Id");
 
                     b.ToTable("Rol");
                 });
@@ -120,10 +120,10 @@ namespace API_SERVER_CEA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonaidPersona")
+                    b.Property<int>("PersonaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RolidRol")
+                    b.Property<int>("RolId")
                         .HasColumnType("int");
 
                     b.Property<string>("contraseniaUsuario")
@@ -133,21 +133,15 @@ namespace API_SERVER_CEA.Migrations
                     b.Property<int>("estadoUsuario")
                         .HasColumnType("int");
 
-                    b.Property<int>("idPersona")
-                        .HasColumnType("int");
-
-                    b.Property<int>("idRol")
-                        .HasColumnType("int");
-
                     b.Property<string>("nombreUsuario")
                         .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("idUsuario");
 
-                    b.HasIndex("PersonaidPersona");
+                    b.HasIndex("PersonaId");
 
-                    b.HasIndex("RolidRol");
+                    b.HasIndex("RolId");
 
                     b.ToTable("Usuario");
                 });
@@ -204,11 +198,15 @@ namespace API_SERVER_CEA.Migrations
                 {
                     b.HasOne("API_SERVER_CEA.Models.Person", "Persona")
                         .WithMany()
-                        .HasForeignKey("PersonaidPersona");
+                        .HasForeignKey("PersonaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API_SERVER_CEA.Models.Role", "Rol")
                         .WithMany()
-                        .HasForeignKey("RolidRol");
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Persona");
 

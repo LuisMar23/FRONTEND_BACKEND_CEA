@@ -32,8 +32,8 @@ namespace API_SERVER_CEA.Controllers
         public async Task<ActionResult<List<DataUser>>> ObtenerUsuarios()
         {
             var datos = from us in this.contexto.Usuario
-                        join r in this.contexto.Rol on us.idRol equals r.idRol
-                        join p in this.contexto.Persona on us.idPersona equals p.idPersona
+                        join r in this.contexto.Rol on us.RolId equals r.Id
+                        join p in this.contexto.Persona on us.PersonaId equals p.Id
                         select new DataUser{ 
                             idUsuario= us.idUsuario, 
                             nombreUsuario=us.nombreUsuario,
