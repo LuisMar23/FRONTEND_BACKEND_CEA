@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_SERVER_CEA.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230306151153_Primera")]
-    partial class Primera
+    [Migration("20230306163603_primera")]
+    partial class primera
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,33 +36,11 @@ namespace API_SERVER_CEA.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Tipo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
                     b.ToTable("Institucion");
-                });
-
-            modelBuilder.Entity("API_SERVER_CEA.Models.InstitutionPerson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstitutionId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Institucion_Persona");
                 });
 
             modelBuilder.Entity("API_SERVER_CEA.Models.Person", b =>
@@ -173,25 +151,6 @@ namespace API_SERVER_CEA.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Visita");
-                });
-
-            modelBuilder.Entity("API_SERVER_CEA.Models.InstitutionPerson", b =>
-                {
-                    b.HasOne("API_SERVER_CEA.Models.Institution", "Institucion")
-                        .WithMany()
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_SERVER_CEA.Models.Person", "Persona")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Institucion");
-
-                    b.Navigation("Persona");
                 });
 
             modelBuilder.Entity("API_SERVER_CEA.Models.User", b =>
