@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_SERVER_CEA.Migrations
 {
     /// <inheritdoc />
-    public partial class Primera : Migration
+    public partial class primera : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,7 +23,7 @@ namespace API_SERVER_CEA.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nombre = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Tipo = table.Column<string>(type: "longtext", nullable: false)
+                    Tipo = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Estado = table.Column<byte>(type: "tinyint unsigned", nullable: false)
                 },
@@ -92,33 +92,6 @@ namespace API_SERVER_CEA.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Institucion_Persona",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    InstitutionId = table.Column<int>(type: "int", nullable: false),
-                    PersonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Institucion_Persona", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Institucion_Persona_Institucion_InstitutionId",
-                        column: x => x.InstitutionId,
-                        principalTable: "Institucion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Institucion_Persona_Persona_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Persona",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -151,16 +124,6 @@ namespace API_SERVER_CEA.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Institucion_Persona_InstitutionId",
-                table: "Institucion_Persona",
-                column: "InstitutionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Institucion_Persona_PersonId",
-                table: "Institucion_Persona",
-                column: "PersonId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Usuario_PersonaId",
                 table: "Usuario",
                 column: "PersonaId");
@@ -175,16 +138,13 @@ namespace API_SERVER_CEA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Institucion_Persona");
+                name: "Institucion");
 
             migrationBuilder.DropTable(
                 name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Visita");
-
-            migrationBuilder.DropTable(
-                name: "Institucion");
 
             migrationBuilder.DropTable(
                 name: "Persona");

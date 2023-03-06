@@ -17,7 +17,6 @@ namespace API_SERVER_CEA.Context
 
         public DbSet<Visit> Visita { get; }
         public DbSet<Institution> Institucion { get; set; }
-        public DbSet<InstitutionPerson> Institucion_Persona { get; set; }
         
 
 
