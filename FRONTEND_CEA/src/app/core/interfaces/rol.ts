@@ -1,5 +1,5 @@
 export interface IRol{
     id:number,
-    nombre:string,
+    nombreRol:string,
     estado:number
 }

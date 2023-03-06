@@ -13,6 +13,11 @@ import { AgregarEditarUsuarioComponent } from './agregar-editar-usuario/agregar-
 
 import {MatDialogModule} from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatSelectModule } from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+
+
+
 @NgModule({
   declarations: [
     RolComponent,
@@ -28,7 +33,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatSortModule,
     MatInputModule,
     MatDialogModule,
-    SharedModule
+    SharedModule,
+    MatSelectModule,
+    MatIconModule
 
   ],
   exports: [
