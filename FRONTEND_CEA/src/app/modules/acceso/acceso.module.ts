@@ -4,6 +4,7 @@ import { AccesoRoutingModule } from './acceso-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -16,7 +17,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     AccesoRoutingModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+
   ],
   exports: [LoginComponent]
 })

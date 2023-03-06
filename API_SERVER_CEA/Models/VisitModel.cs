@@ -19,6 +19,5 @@ namespace API_SERVER_CEA.Models
 
         public byte estado { get; set; }
 
-        public IEnumerable<Person> Personas { get; set; }
     }
 }

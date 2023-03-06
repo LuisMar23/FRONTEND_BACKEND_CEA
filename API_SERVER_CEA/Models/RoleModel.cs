@@ -12,8 +12,5 @@ namespace API_SERVER_CEA.Models
 
         public byte estadoRol { get; set; }
 
-
-        //public IEnumerable<UserRole>? UsuariosRoles { get; set; }
-
     }
 }

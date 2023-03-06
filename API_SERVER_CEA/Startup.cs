@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -26,25 +27,16 @@ namespace API_SERVER_CEA
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API_SERVER_CEA", Version = "v1" });
             });
-            services.AddDbContext<ApplicationContext>(options => options.UseMySQL(
-                     Configuration.GetConnectionString("cadenaConexion")));
+            var connectionString = Configuration.GetConnectionString("cadenaConexion");
+            services.AddDbContext<ApplicationContext>(options =>
+            {
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            });
+
             services.AddCors(options => options.AddPolicy("AllowWebApp",
                      builder => builder.AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader()));
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = Configuration["Jwt:Issuer"],
-            //        ValidAudience = Configuration["Jwt:Audience"],
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            //    };
-            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

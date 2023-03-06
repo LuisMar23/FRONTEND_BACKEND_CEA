@@ -13,12 +13,12 @@ export class LoginService {
    
     //private _cookieService: CookieService
     ){}
-  private httpHeaders: HttpHeaders = new HttpHeaders({
-    'content-type': 'application/json',
-    // Authorization: `Bearer ${this._cookieService.get('access')}`,
-  });
+  // private httpHeaders: HttpHeaders = new HttpHeaders({
+  //   'content-type': 'application/json',
+  //   // Authorization: `Bearer ${this._cookieService.get('access')}`,
+  // });
 
   enviarUsuario(usuario:Login): Observable<Login>{
-    return this.httpClient.post<Login>(`${environment.API_URL}/api/Login`,usuario, { headers: this.httpHeaders });
+    return this.httpClient.post<Login>(`${environment.API_URL}/api/Login`,usuario);
   }
 }

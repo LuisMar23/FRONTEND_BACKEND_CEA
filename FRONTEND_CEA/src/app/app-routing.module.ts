@@ -9,14 +9,13 @@ const routes: Routes = [
   },
   {
 
-    path: 'logout',
+    path: 'singin',
     loadChildren: () =>
-      import('./modules/logout/logout.module').then((m) => m.LogoutModule),
+      import('./modules/singin/singin.module').then((m) => m.SingInModule),
 
 
   },
   {
-    
     path: 'home',
     loadChildren: () =>
       import('./modules/home/home.module').then((m) => m.HomeModule),

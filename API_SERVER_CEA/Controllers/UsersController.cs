@@ -10,8 +10,9 @@ using API_SERVER_CEA.Models;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
-using Org.BouncyCastle.Crypto.Engines;
+
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Runtime.Intrinsics.Arm;
 
 namespace API_SERVER_CEA.Controllers
 {
@@ -19,55 +20,65 @@ namespace API_SERVER_CEA.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly ApplicationContext _context;
+        private readonly ApplicationContext contexto;
 
         public UsersController(ApplicationContext context)
         {
-            _context = context;
+            this.contexto = context;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsuario()
+        public async Task<ActionResult<List<DataUser>>> ObtenerUsuarios()
         {
-            return await _context.Usuario.ToListAsync();
+            var datos = from us in this.contexto.Usuario
+                        join r in this.contexto.Rol on us.idRol equals r.idRol
+                        join p in this.contexto.Persona on us.idPersona equals p.idPersona
+                        select new DataUser{ 
+                            idUsuario= us.idUsuario, 
+                            nombreUsuario=us.nombreUsuario,
+                            nombreRol=r.nombreRol,
+                            nombrePersona = p.nombrePersona, 
+                            apellidoPersona= p.apellidoPersona, 
+                            estadoUsuario=us.estadoUsuario
+                        };
+            return await datos.ToListAsync();
         }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            var user = await _context.Usuario.FindAsync(id);
+        //GET: api/Users/5
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<User>> GetUser(int id)
+        //{
+        //    var user = await _context.Usuario.FindAsync(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //    if (user == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return user;
-        }
+        //    return user;
+        //}
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+       
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<ActionResult<List<User>>> EditarUsuario(int id, User user)
         {
             if (id != user.idUsuario)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            contexto.Entry(user).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await contexto.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
                 if (!UserExists(id))
                 {
-                    return NotFound();
+                    return NotFound("Este usuario ya existe");
                 }
                 else
                 {
@@ -78,55 +89,55 @@ namespace API_SERVER_CEA.Controllers
             return NoContent();
         }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<List<User>>> AgregarUsuario(User user)
         {
-
-            _context.Usuario.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.idUsuario }, user);
+            var usuario=await contexto.Usuario.FirstOrDefaultAsync(x=>x.nombreUsuario==user.nombreUsuario);
+            if (usuario != null)
+            {
+                return BadRequest("Este usuario ya existe");
+            }
+            else
+            {
+                var i=Encriptar(user.contraseniaUsuario);
+                user.contraseniaUsuario = i;
+                contexto.Usuario.Add(user);
+                await contexto.SaveChangesAsync();
+                return Ok("Usuario agregado con exito");
+              
+            }
         }
 
         // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        [HttpPut("baja/{id}")]
+        public async Task<IActionResult> DesactivarUsuario(int id,User usuario)
         {
-            var user = await _context.Usuario.FindAsync(id);
+            var user = await contexto.Usuario.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(user);
-            await _context.SaveChangesAsync();
+            user.estadoUsuario = usuario.estadoUsuario;
+            await contexto.SaveChangesAsync();
 
             return NoContent();
         }
-        //public string Encriptar(string cadena)
-        //{
-        //    byte[]inputBytes=Encoding.UTF8.GetBytes(cadena);
-        //    byte[] encripted;
-        //    RijndaelManaged cripto= new RijndaelManaged();
-        //    using (MemoryStream ms =new MemoryStream(inputBytes.Length))
-        //    {
-        //        using (CryptoStream objCryptoStream = new CryptoStream(ms, cripto.CreateEncryptor(Clave, llave), CryptoStreamMode.Write)
-        //        {
-        //            objCryptoStream.Write(inputBytes,0,inputBytes.Length),
-        //            objCryptoStream.FlushFinalBlock(),
-        //            objCryptoStream.Close(),
-        //        }
-        //        encripted=ms.ToArray();
-
-        //    }
-        //    return Convert.ToBase64String(encripted);
-        //}
+        public static string Encriptar(string cadena)
+        {
+            SHA256 llave= SHA256.Create();
+            ASCIIEncoding e = new ASCIIEncoding();
+            byte[] s = null;
+            StringBuilder stringBuilder= new StringBuilder();
+            s = llave.ComputeHash(e.GetBytes(cadena));
+            for (int i = 0; i < s.Length; i++) stringBuilder.AppendFormat("{0:x2}", s[i]);
+            return stringBuilder.ToString();
+        }
 
         private bool UserExists(int id)
         {
-            return _context.Usuario.Any(e => e.idUsuario == id);
+            return contexto.Usuario.Any(e => e.idUsuario == id);
         }
     }
 }
+

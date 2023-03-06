@@ -23,72 +23,10 @@ namespace API_SERVER_CEA.Controllers
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Role>>> GetRol()
+        public async Task<ActionResult<List<Role>>> ObtenerRoles()
         {
             return await _context.Rol.ToListAsync();
         }
 
-        // GET: api/Roles/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Role>> GetRole(int id)
-        {
-            var role = await _context.Rol.FindAsync(id);
-
-            if (role == null)
-            {
-                return NotFound();
-            }
-
-            return role;
-        }
-
-        // PUT: api/Roles/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutRole(int id, Role role)
-        {
-            if (id != role.idRol)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(role).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RoleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Roles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<List<Role>>> PostRole(Role role)
-        {
-            _context.Rol.Add(role);
-            await _context.SaveChangesAsync();
-
-            return Ok();
-        }
-
-        
-
-        private bool RoleExists(int id)
-        {
-            return _context.Rol.Any(e => e.idRol == id);
-        }
     }
 }

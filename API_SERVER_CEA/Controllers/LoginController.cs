@@ -27,33 +27,36 @@ namespace API_SERVER_CEA.Controllers
         }
 
         [HttpPost]
-        //public async Task<ActionResult<List<LoginUser>>>  Login(LoginUser userlogin)
-        //{
-        //    var u = await contexto.Usuario.FirstOrDefaultAsync(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
-        //    if (u!=null)
-        //    {
-        //        var token = Generar(u);
-        //        return Ok(token);
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Usuario no encontrado");
-        //    }
-
-
-
-        //}
-        public IActionResult Login(LoginUser userLogin)
+        public async Task<ActionResult<List<LoginUser>>> Login(LoginUser userlogin)
         {
-            var user = Authenticate(userLogin);
-            if (user != null)
+            string ePass = UsersController.Encriptar(userlogin.Password);
+            var u = await contexto.Usuario.FirstOrDefaultAsync(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == ePass);
+            if (u != null)
             {
-                var token = Generar(user);
+                
+
+                var token = Generar(u);
                 return Ok(token);
             }
-            return NotFound("Usuario no encontrado");
+            else
+            {
+                return NotFound("Usuario no encontrado");
+            }
+
+
 
         }
+        //    public IActionResult Login(LoginUser userLogin)
+        //{
+        //    var user = Authenticate(userLogin);
+        //    if (user != null)
+        //    {
+        //        var token = Generar(user);
+        //        return Ok(token);
+        //    }
+        //    return NotFound("Usuario no encontrado");
+
+        //}
         [HttpGet]
         public IActionResult Get()
         {
@@ -63,7 +66,9 @@ namespace API_SERVER_CEA.Controllers
 
         private User Authenticate(LoginUser userlogin)
         {
-            var currentuser = contexto.Usuario.FirstOrDefault(user => user.nombreUsuario.ToLower() == userlogin.UserName.ToLower() && user.contraseniaUsuario == userlogin.Password);
+
+            string ePass = UsersController.Encriptar(userlogin.Password);
+            var currentuser = contexto.Usuario.FirstOrDefault(user => user.nombreUsuario == userlogin.UserName && user.contraseniaUsuario == ePass);
 
             if (currentuser != null)
             {
@@ -82,6 +87,7 @@ namespace API_SERVER_CEA.Controllers
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.nombreUsuario),
+
 
             };
             //Crear el token

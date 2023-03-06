@@ -11,10 +11,6 @@ import { LoginService } from 'src/app/core/services/login.service';
 })
 
 export class LoginComponent implements OnInit{
-  // displayedColumns: string[] = [
-  //   'username',
-  //   'contrasenia',
-  // ];
   public form!: FormGroup;
   datos:any={}
   constructor(
@@ -34,10 +30,8 @@ export class LoginComponent implements OnInit{
     this.loginService.enviarUsuario(usuario).subscribe(
       (resp) => {
         this.datos=resp;
-        console.log(this.datos);
         localStorage.setItem("user",JSON.stringify(this.datos["tok"]));
-        console.log(resp);
-        this.route.navigate(['/home/dashboard']);
+        this.route.navigate(['/singin/usuario']);
       },
       (e)=>{
         console.log(e.error);

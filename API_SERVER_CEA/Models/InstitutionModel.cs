@@ -14,7 +14,6 @@ namespace API_SERVER_CEA.Models
         public string Tipo { get; set; }
 
         public byte Estado { get; set; }
-        public IEnumerable<InstitutionPerson> InstitucionPersona { get; set; }
 
     }
 }

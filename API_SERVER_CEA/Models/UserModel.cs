@@ -16,6 +16,10 @@ namespace API_SERVER_CEA.Models
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
         public int estadoUsuario { get; set; }
 
-        public IEnumerable<UserRole> UsuariosRoles { get; set; }
+        public int idRol { get; set; }
+        public Role? Rol { get; set; }
+
+        public int idPersona { get; set; }
+        public Person? Persona { get; set; }
     }
 }
