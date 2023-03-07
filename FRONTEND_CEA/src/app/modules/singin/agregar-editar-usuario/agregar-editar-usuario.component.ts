@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelect } from '@angular/material/select';
 import { IRol } from 'src/app/core/interfaces/rol';
 import { RolService } from 'src/app/core/services/rol.service';
+import { IUsuario } from 'src/app/core/interfaces/usuario';
+import { IPersona } from 'src/app/core/interfaces/persona';
 
 
 @Component({
@@ -17,19 +19,17 @@ import { RolService } from 'src/app/core/services/rol.service';
 })
 export class AgregarEditarUsuarioComponent implements OnInit  {
   form: FormGroup;
-  
   constructor(public dialogRef: MatDialogRef<AgregarEditarUsuarioComponent>,private rol:RolService,
     private fb: FormBuilder){
       this.form = this.fb.group({
         nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
-        nombre:['', ],
+        apellido:['', ],
+        edad:['', ],
+        ci:['', ],
+        celular:['', ],
+        usuario:['', ],
+        contrasenia:['',],
+        rolid:[],
       });
     }
 
@@ -49,6 +49,23 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
       console.log(this.listaRoles);
     })
   }
+  agregarUsuario(){
+    const usuario:IUsuario = {
+      nombreUsuario: this.form.value.usuario,
+      contraseniaUsuario: this.form.value.contrasenia,
+      estado: 1,
+      RolId: this.form.value.rolid,
+      persona: {
+        nombrePersona:this.form.value.nombre,
+        apellidoPersona: this.form.value.apellido,
+        edadPersona: this.form.value.edad,
+        ciPersona: this.form.value.ci,
+        celularPersona: this.form.value.celular,
+        estadoPersona: 1
+      }
 
+    }
+    console.log(usuario);
+  }
   
 }

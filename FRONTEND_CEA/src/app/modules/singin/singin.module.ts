@@ -15,6 +15,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatSelectModule } from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -35,7 +36,8 @@ import {MatIconModule} from '@angular/material/icon';
     MatDialogModule,
     SharedModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    ReactiveFormsModule
 
   ],
   exports: [
