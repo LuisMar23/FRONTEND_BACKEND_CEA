@@ -33,7 +33,6 @@ namespace API_SERVER_CEA.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Tipo")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
