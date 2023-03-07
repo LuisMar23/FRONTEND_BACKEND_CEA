@@ -41,27 +41,6 @@ namespace API_SERVER_CEA.Migrations
                     b.ToTable("Institucion");
                 });
 
-            modelBuilder.Entity("API_SERVER_CEA.Models.InstitutionPerson", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstitutionId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Institucion_Persona");
-                });
-
             modelBuilder.Entity("API_SERVER_CEA.Models.Person", b =>
                 {
                     b.Property<int>("Id")
@@ -149,6 +128,12 @@ namespace API_SERVER_CEA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("InstitutionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("int");
+
                     b.Property<byte>("estado")
                         .HasColumnType("tinyint unsigned");
 
@@ -169,26 +154,11 @@ namespace API_SERVER_CEA.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("InstitutionId");
+
+                    b.HasIndex("PersonaId");
+
                     b.ToTable("Visita");
-                });
-
-            modelBuilder.Entity("API_SERVER_CEA.Models.InstitutionPerson", b =>
-                {
-                    b.HasOne("API_SERVER_CEA.Models.Institution", "Institucion")
-                        .WithMany()
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_SERVER_CEA.Models.Person", "Persona")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Institucion");
-
-                    b.Navigation("Persona");
                 });
 
             modelBuilder.Entity("API_SERVER_CEA.Models.User", b =>
@@ -202,6 +172,25 @@ namespace API_SERVER_CEA.Migrations
                     b.HasOne("API_SERVER_CEA.Models.Role", "Rol")
                         .WithMany()
                         .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Persona");
+
+                    b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("API_SERVER_CEA.Models.Visit", b =>
+                {
+                    b.HasOne("API_SERVER_CEA.Models.Institution", "Rol")
+                        .WithMany()
+                        .HasForeignKey("InstitutionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API_SERVER_CEA.Models.Person", "Persona")
+                        .WithMany()
+                        .HasForeignKey("PersonaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
