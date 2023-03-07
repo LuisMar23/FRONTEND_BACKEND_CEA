@@ -13,9 +13,11 @@ export class UsuarioService {
   obtenerUsuarios():Observable<any>{
     return this.httpclient.get<any>(`${environment.API_URL}/api/Users`);
   }
+  
   enviarUsuario(usuario:IUsuario):Observable<any>{
     return this.httpclient.post(`${environment.API_URL}/api/Users`,usuario);
   }
+
   modificarUsuario(id:number,usuario:IUsuario):Observable<any>{
     return this.httpclient.put(`${environment.API_URL}/api/Users/${id}`,usuario)
   }

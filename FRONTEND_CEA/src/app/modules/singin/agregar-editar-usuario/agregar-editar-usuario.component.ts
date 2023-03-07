@@ -16,11 +16,27 @@ import { RolService } from 'src/app/core/services/rol.service';
   styleUrls: ['./agregar-editar-usuario.component.css']
 })
 export class AgregarEditarUsuarioComponent implements OnInit  {
+  form: FormGroup;
+  
+  constructor(public dialogRef: MatDialogRef<AgregarEditarUsuarioComponent>,private rol:RolService,
+    private fb: FormBuilder){
+      this.form = this.fb.group({
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+        nombre:['', ],
+      });
+    }
 
-  constructor(public dialogRef: MatDialogRef<AgregarEditarUsuarioComponent>,private rol:RolService) { }
   ngOnInit(): void {
     this.listarRoles();
   }
+
   listaRoles!: IRol[];
 
   cancelar(){
@@ -33,4 +49,6 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
       console.log(this.listaRoles);
     })
   }
+
+  
 }
