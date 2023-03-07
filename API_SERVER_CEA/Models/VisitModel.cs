@@ -19,5 +19,11 @@ namespace API_SERVER_CEA.Models
 
         public byte estado { get; set; }
 
+        public int InstitutionId { get; set; }
+        public Institution? Rol { get; set; }
+
+        public int PersonaId { get; set; }
+        public Person? Persona { get; set; }
+
     }
 }
