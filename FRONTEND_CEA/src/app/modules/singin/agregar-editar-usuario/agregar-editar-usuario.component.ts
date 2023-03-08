@@ -10,6 +10,9 @@ import { IRol } from 'src/app/core/interfaces/rol';
 import { RolService } from 'src/app/core/services/rol.service';
 import { IUsuario } from 'src/app/core/interfaces/usuario';
 import { IPersona } from 'src/app/core/interfaces/persona';
+import { PersonaService } from 'src/app/core/services/persona.service';
+import { UsuarioService } from 'src/app/core/services/usuario.service';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -20,15 +23,15 @@ import { IPersona } from 'src/app/core/interfaces/persona';
 export class AgregarEditarUsuarioComponent implements OnInit  {
   form: FormGroup;
   constructor(public dialogRef: MatDialogRef<AgregarEditarUsuarioComponent>,private rol:RolService,
-    private fb: FormBuilder){
+    private fb: FormBuilder, private UsuarioService: UsuarioService, private PersonaService:PersonaService){
       this.form = this.fb.group({
-        nombre:['', ],
-        apellido:['', ],
-        edad:['', ],
-        ci:['', ],
-        celular:['', ],
-        usuario:['', ],
-        contrasenia:['',],
+        nombre:['', Validators.required],
+        apellido:['', Validators.required],
+        edad:['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+        ci:['', [Validators.required, Validators.pattern("^[0-9]*$")]],
+        celular:['',[Validators.required, Validators.pattern("^[0-9]*$")]],
+        usuario:['', Validators.required],
+        contrasenia:['', Validators.required],
         rolid:[],
       });
     }
@@ -43,6 +46,7 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
     this.dialogRef.close();
     };
    hide = true;
+
   listarRoles(){
     this.rol.obtenerRoles().subscribe((resp)=>{
       this.listaRoles=resp;
@@ -53,7 +57,7 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
     const usuario:IUsuario = {
       nombreUsuario: this.form.value.usuario,
       contraseniaUsuario: this.form.value.contrasenia,
-      estado: 1,
+      estadoUsuario: 1,
       RolId: this.form.value.rolid,
       persona: {
         nombrePersona:this.form.value.nombre,
@@ -63,9 +67,33 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
         celularPersona: this.form.value.celular,
         estadoPersona: 1
       }
-
     }
-    console.log(usuario);
+
+    // const Toast = Swal.mixin({
+    //   toast: true,
+    //   position: 'top-end',
+    //   showConfirmButton: false,
+    //   timer: 3000,
+    //   timerProgressBar: true,
+    //   didOpen: (toast) => {
+    //     toast.addEventListener('mouseenter', Swal.stopTimer)
+    //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+    //   }
+    // })
+    
+    // Toast.fire({
+    //   icon: 'success',
+    //   title: 'Registrado exitosamente'
+    // })
+
+    this.UsuarioService.enviarUsuario(usuario).subscribe(() =>{
+      
+
+
+      console.log("Usuario Agregado Exitosamente");
+      this.dialogRef.close();
+    });
+
   }
   
 }
