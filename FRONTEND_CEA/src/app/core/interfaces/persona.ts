@@ -1,9 +1,8 @@
 export interface IPersona{
-    id:number,
-    nombre:string,
-    apellido:string,
-    CI:number,
-    edad:number,
-    celular:number,
-    estado:number
+    nombrePersona:string,
+    apellidoPersona:string,
+    ciPersona:number,
+    edadPersona:number,
+    celularPersona:number,
+    estadoPersona:number
 }

@@ -93,18 +93,19 @@ namespace API_SERVER_CEA.Controllers
         public async Task<ActionResult<List<User>>> AgregarUsuario(User user)
         {
             var usuario=await contexto.Usuario.FirstOrDefaultAsync(x=>x.nombreUsuario==user.nombreUsuario);
-            if (usuario != null)
+            if (usuario == null)
             {
-                return BadRequest("Este usuario ya existe");
-            }
-            else
-            {
-                var i=Encriptar(user.contraseniaUsuario);
+                var i = Encriptar(user.contraseniaUsuario);
                 user.contraseniaUsuario = i;
                 contexto.Usuario.Add(user);
                 await contexto.SaveChangesAsync();
                 return Ok("Usuario agregado con exito");
-              
+           
+            }
+            else
+            {
+                return BadRequest("Este usuario ya existe");
+
             }
         }
 
