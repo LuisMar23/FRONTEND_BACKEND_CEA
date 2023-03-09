@@ -26,12 +26,13 @@ namespace API_SERVER_CEA.Controllers
             }
             else
             {
-                contexto.Institucion.Add(inst);
+                contexto.Institucion.Add(institution);
                 await contexto.SaveChangesAsync();
                 return Ok("Institucion agregada con exito");
 
             }
         }
+
         [HttpGet]
         public async Task<ActionResult<List<Institution>>> ObtenerInstituciones(){
 

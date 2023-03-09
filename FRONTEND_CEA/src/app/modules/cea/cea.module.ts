@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RolComponent } from './rol/rol.component';
-import { SingInRoutingModule } from './singin-routing.module';
-import { AgregarEditarUsuarioComponent } from './agregar-editar-usuario/agregar-editar-usuario.component';
+import { InstitucionComponent } from './institucion/institucion.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { UsuarioComponent } from './usuario/usuario.component';
 
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,19 +12,19 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import {MatIconModule} from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatButtonModule} from '@angular/material/button';
+import { CeaRoutingModule } from './cea-routing.module';
+import { AgregarEditarInstitucionComponent } from './agregar-editar-institucion/agregar-editar-institucion.component';
 
 
 
 @NgModule({
   declarations: [
-    RolComponent,
-    UsuarioComponent,
-    AgregarEditarUsuarioComponent
+    InstitucionComponent,
+    AgregarEditarInstitucionComponent
   ],
   imports: [
     CommonModule,
-    SingInRoutingModule,
+    CeaRoutingModule,
     SharedModule,
 
     MatFormFieldModule,
@@ -38,13 +35,11 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
     MatSelectModule,
     MatIconModule,
-    ReactiveFormsModule,
-    MatButtonModule
-
+    ReactiveFormsModule
+   
   ],
-  exports: [
-    RolComponent,
-    UsuarioComponent
+  exports:[
+    InstitucionComponent
   ]
 })
-export class SingInModule { }
+export class CeaModule { }

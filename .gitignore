@@ -1,0 +1,7 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+/API_SERVER_CEA/.vs/ProjectEvaluation/api_server_cea.metadata.v6.1
+/API_SERVER_CEA/.vs/ProjectEvaluation/api_server_cea.projects.v6.1
+/API_SERVER_CEA/.vs/API_SERVER_CEA/DesignTimeBuild/.dtbcache.v2
