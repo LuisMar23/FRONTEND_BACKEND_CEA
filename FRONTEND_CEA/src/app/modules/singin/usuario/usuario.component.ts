@@ -14,7 +14,7 @@ import { AgregarEditarUsuarioComponent } from '../agregar-editar-usuario/agregar
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent implements OnInit,AfterViewInit{
-  displayedColumns: string[] = ['id','usuario','rol','nombre','apellido','estado'];
+  displayedColumns: string[] = ['id','usuario','rol','nombre','apellido','estado','opciones'];
   constructor(private _usuarioService:UsuarioService,public dialog: MatDialog){}
   private usuarios!:any[];
   dataSource =new MatTableDataSource<any>(this.usuarios);
@@ -45,7 +45,8 @@ export class UsuarioComponent implements OnInit,AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
-  agregarEditarUsuario(){
+  agregarEditarUsuario(id?: number){
+    console.log(id)
     const dialogRef = this.dialog.open(AgregarEditarUsuarioComponent, {
       width: '550px',
       disableClose: true
