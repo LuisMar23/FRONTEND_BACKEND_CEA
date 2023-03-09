@@ -1,11 +1,14 @@
 import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IUsuario } from 'src/app/core/interfaces/usuario';
-import { UsuarioService } from 'src/app/core/services/usuario.service';
+
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import { IUsuario } from 'src/app/core/interfaces/usuario';
+import { UsuarioService } from 'src/app/core/services/usuario.service';
 import { AgregarEditarUsuarioComponent } from '../agregar-editar-usuario/agregar-editar-usuario.component';
 
 @Component({

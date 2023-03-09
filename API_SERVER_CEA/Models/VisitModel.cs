@@ -6,16 +6,18 @@ namespace API_SERVER_CEA.Models
     {
         [Key]
         public int id { get; set; }
+        [Required(ErrorMessage = "Este campo no debe estar vacio")]
+        public string actividad { get; set; }
         public DateTime fecha { get; set; }
 
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
-        public string? lugar { get; set; }
+        public string lugar { get; set; }
 
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
-        public string? observaciones { get; set; }
+        public string observaciones { get; set; }
 
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
-        public string? tipo { get; set; }
+        public string tipo { get; set; }
 
         public byte estado { get; set; }
 

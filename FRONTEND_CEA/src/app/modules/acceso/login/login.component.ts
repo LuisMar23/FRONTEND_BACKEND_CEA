@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
       (resp) => {
         this.datos=resp;
         localStorage.setItem("user",JSON.stringify(this.datos["tok"]));
-        this.route.navigate(['/singin/usuario']);
+        this.route.navigate(['/cea/institucion']);
       },
       (e)=>{
         console.log(e.error);
