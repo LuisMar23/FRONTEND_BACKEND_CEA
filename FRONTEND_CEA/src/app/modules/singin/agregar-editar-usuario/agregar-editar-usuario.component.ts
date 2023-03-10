@@ -3,7 +3,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSelect } from '@angular/material/select';
@@ -15,6 +14,7 @@ import { IUsuario } from 'src/app/core/interfaces/usuario';
 import { IPersona } from 'src/app/core/interfaces/persona';
 import { PersonaService } from 'src/app/core/services/persona.service';
 import { UsuarioService } from 'src/app/core/services/usuario.service';
+import { DateAdapter } from '@angular/material/core';
 import Swal from 'sweetalert2'
 
 
@@ -26,7 +26,7 @@ import Swal from 'sweetalert2'
 export class AgregarEditarUsuarioComponent implements OnInit  {
   form: FormGroup;
   constructor(public dialogRef: MatDialogRef<AgregarEditarUsuarioComponent>,private rol:RolService,
-    private fb: FormBuilder, private UsuarioService: UsuarioService, private PersonaService:PersonaService){
+    private fb: FormBuilder, private UsuarioService: UsuarioService, private PersonaService:PersonaService, private dateAdapter: DateAdapter<any>){
       this.form = this.fb.group({
         nombre:['', Validators.required],
         apellido:['', Validators.required],
@@ -37,6 +37,7 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
         contrasenia:['', Validators.required],
         rolid:[],
       });
+      dateAdapter.setLocale('es');
     }
 
   ngOnInit(): void {
@@ -72,27 +73,23 @@ export class AgregarEditarUsuarioComponent implements OnInit  {
       }
     }
 
-    // const Toast = Swal.mixin({
-    //   toast: true,
-    //   position: 'top-end',
-    //   showConfirmButton: false,
-    //   timer: 3000,
-    //   timerProgressBar: true,
-    //   didOpen: (toast) => {
-    //     toast.addEventListener('mouseenter', Swal.stopTimer)
-    //     toast.addEventListener('mouseleave', Swal.resumeTimer)
-    //   }
-    // })
-    
-    // Toast.fire({
-    //   icon: 'success',
-    //   title: 'Registrado exitosamente'
-    // })
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+
+    Toast.fire({
+      icon: 'success',
+      title: 'Registrado exitosamente'
+    })
 
     this.UsuarioService.enviarUsuario(usuario).subscribe(() =>{
-      
-
-
       console.log("Usuario Agregado Exitosamente");
       this.dialogRef.close();
     });

@@ -99,12 +99,12 @@ namespace API_SERVER_CEA.Controllers
                 user.contraseniaUsuario = i;
                 contexto.Usuario.Add(user);
                 await contexto.SaveChangesAsync();
-                return Ok("Usuario agregado con exito");
+                return Ok();
            
             }
             else
             {
-                return BadRequest("Este usuario ya existe");
+                return BadRequest();
 
             }
         }
