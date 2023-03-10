@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API_SERVER_CEA.Migrations
 {
     /// <inheritdoc />
-    public partial class Tercewra : Migration
+    public partial class primera : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -85,25 +85,11 @@ namespace API_SERVER_CEA.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     tipo = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    estado = table.Column<byte>(type: "tinyint unsigned", nullable: false),
-                    InstitutionId = table.Column<int>(type: "int", nullable: false),
-                    PersonaId = table.Column<int>(type: "int", nullable: false)
+                    estado = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Visita", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Visita_Institucion_InstitutionId",
-                        column: x => x.InstitutionId,
-                        principalTable: "Institucion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Visita_Persona_PersonaId",
-                        column: x => x.PersonaId,
-                        principalTable: "Persona",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -148,21 +134,14 @@ namespace API_SERVER_CEA.Migrations
                 name: "IX_Usuario_RolId",
                 table: "Usuario",
                 column: "RolId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Visita_InstitutionId",
-                table: "Visita",
-                column: "InstitutionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Visita_PersonaId",
-                table: "Visita",
-                column: "PersonaId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Institucion");
+
             migrationBuilder.DropTable(
                 name: "Usuario");
 
@@ -170,13 +149,10 @@ namespace API_SERVER_CEA.Migrations
                 name: "Visita");
 
             migrationBuilder.DropTable(
-                name: "Rol");
-
-            migrationBuilder.DropTable(
-                name: "Institucion");
-
-            migrationBuilder.DropTable(
                 name: "Persona");
+
+            migrationBuilder.DropTable(
+                name: "Rol");
         }
     }
 }

@@ -127,18 +127,12 @@ namespace API_SERVER_CEA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("InstitutionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("actividad")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<byte>("estado")
-                        .HasColumnType("tinyint unsigned");
+                    b.Property<int>("estado")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("fecha")
                         .HasColumnType("datetime(6)");
@@ -157,10 +151,6 @@ namespace API_SERVER_CEA.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("InstitutionId");
-
-                    b.HasIndex("PersonaId");
-
                     b.ToTable("Visita");
                 });
 
@@ -175,25 +165,6 @@ namespace API_SERVER_CEA.Migrations
                     b.HasOne("API_SERVER_CEA.Models.Role", "Rol")
                         .WithMany()
                         .HasForeignKey("RolId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Persona");
-
-                    b.Navigation("Rol");
-                });
-
-            modelBuilder.Entity("API_SERVER_CEA.Models.Visit", b =>
-                {
-                    b.HasOne("API_SERVER_CEA.Models.Institution", "Rol")
-                        .WithMany()
-                        .HasForeignKey("InstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API_SERVER_CEA.Models.Person", "Persona")
-                        .WithMany()
-                        .HasForeignKey("PersonaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

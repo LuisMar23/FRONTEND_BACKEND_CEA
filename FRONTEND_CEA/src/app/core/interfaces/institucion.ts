@@ -1,4 +1,4 @@
-export interface IInstitucion {
+export interface Institucion {
     // Id:number,
     Nombre:string,
     Tipo:string,

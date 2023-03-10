@@ -7,7 +7,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 
-import { IInstitucion } from 'src/app/core/interfaces/institucion';
+import { Institucion } from 'src/app/core/interfaces/institucion';
 import { InstitucionService } from 'src/app/core/services/institucion.service';
 import { AgregarEditarInstitucionComponent } from '../agregar-editar-institucion/agregar-editar-institucion.component';
 @Component({
@@ -17,9 +17,9 @@ import { AgregarEditarInstitucionComponent } from '../agregar-editar-institucion
 })
 export class InstitucionComponent implements OnInit,AfterViewInit{
  
-  displayedColumns:string[]=['id','nombre','tipo','estado'];
-  private instituciones!:IInstitucion[];
-  dataSource =new MatTableDataSource<IInstitucion>(this.instituciones);
+  displayedColumns:string[]=['id','nombre','tipo','estado','opciones'];
+  private instituciones!:Institucion[];
+  dataSource =new MatTableDataSource<Institucion>(this.instituciones);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private _institucionservice:InstitucionService,public dialog: MatDialog){}
@@ -35,11 +35,16 @@ export class InstitucionComponent implements OnInit,AfterViewInit{
       width: '550px',
       disableClose: true
     });
+    dialogRef.afterClosed().subscribe(result=>{
+      this.obtenerInstituciones();
+    })
   }
   obtenerInstituciones(){
     this._institucionservice.obtenerInstituciones().subscribe((resp)=>{
-      this.instituciones=resp;
+      this.dataSource.data=resp;
+      console.log(this.dataSource.data);
     })
+   
   };
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -48,5 +53,13 @@ export class InstitucionComponent implements OnInit,AfterViewInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+  darBajaInstitucion(id: number, accion: number){
+    this._institucionservice.editarInstitucion(id,accion).subscribe((r) => {
+      this.obtenerInstituciones();
+    });
+  }
+  modificarInstitucion(inst:any){
+
   }
 }

@@ -19,13 +19,13 @@ namespace API_SERVER_CEA.Models
         [Required(ErrorMessage = "Este campo no debe estar vacio")]
         public string tipo { get; set; }
 
-        public byte estado { get; set; }
+        public int estado { get; set; }
 
-        public int InstitutionId { get; set; }
-        public Institution? Rol { get; set; }
+        //public int InstitucionId { get; set; }
+        //public Institution? Institucion { get; set; }
 
-        public int PersonaId { get; set; }
-        public Person? Persona { get; set; }
+        //public int PersonaId { get; set; }
+        //public Person? Persona { get; set; }
 
     }
 }

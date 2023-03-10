@@ -19,7 +19,7 @@ namespace API_SERVER_CEA.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Institution>>> AgregarInstitucion(Institution institution)
         {
-            var inst = await contexto.Institucion.FirstOrDefaultAsync(x => x.Nombre == institution.Nombre);
+            Institution inst = await contexto.Institucion.FirstOrDefaultAsync(x => x.Nombre == institution.Nombre);
             if (inst != null)
             {
                 return BadRequest("Este institucion ya existe");
@@ -28,7 +28,7 @@ namespace API_SERVER_CEA.Controllers
             {
                 contexto.Institucion.Add(institution);
                 await contexto.SaveChangesAsync();
-                return Ok("Institucion agregada con exito");
+                return Ok();
 
             }
         }

@@ -32,5 +32,10 @@ namespace API_SERVER_CEA.Controllers
 
             }
         }
+        [HttpGet]
+        public async Task<ActionResult<List<Person>>> ObtenerPersonas()
+        {
+            return await contexto.Persona.ToListAsync();
+        }
     }
 }

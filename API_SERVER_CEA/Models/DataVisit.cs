@@ -3,16 +3,18 @@
     public class DataVisit
     {
 
-        public int idvisita { get; set; }
-        public string lugarVisita { get; set; }
-        public string observacionesVisita { get; set; }
-        public string tipoVisita { get; set; }
+        public int id { get; set; }
+        public string actividad{ get; set; }
+        public string observaciones { get; set; }
+        public string lugar { get; set; }
+        public string tipo { get; set; }
+        public  DateTime fecha { get; set; }
         public string nombrePersona { get; set; }
         public string apellidoPersona { get; set; }
         public int ciPersona { get; set; }
         public int celularPersona { get; set; }
-        public string tipoInstitucion { get; set; }
-        public int estadoVisita { get; set; }
+        public string nombreInstitucion { get; set; }
+        public int estado { get; set; }
 
     }
 }
